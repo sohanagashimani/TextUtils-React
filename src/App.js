@@ -1,24 +1,65 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+// import About from "./components/About";
+import Navbar from "./components/Navbar";
+import TextForm from "./components/TextForm";
+import Alert from "./components/Alert";
+import React, { useState } from "react";
+// import {
+//   BrowserRouter as Router,
+//   Switch,
+//   Route,
+// } from "react-router-dom";
 
 function App() {
+  // eslint-disable-next-line
+  const [mode, setmode] = useState("light"); //Whether dark mode is enabled or not;
+  const [alert, setalert] = useState(null);
+  const showAlert = (message, type) => {
+    setalert({
+      msg: message,
+      type: type,
+    });
+    setTimeout(() => {
+      setalert(null);
+    }, 1500);
+  };
+  const toggleMode = () => {
+    if (mode === "light") {
+      setmode("dark");
+      document.body.style.backgroundColor = "#081424";
+      showAlert("Dark mode has been enabled", "success");
+    } else {
+      setmode("light");
+      document.body.style.backgroundColor = "white";
+      showAlert("Dark mode has been disabled", "success");
+    }
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {/* <Router> */}
+        <Navbar
+          title="TeXtUtils"
+          about="about"
+          mode={mode}
+          toggleMode={toggleMode}
+        />
+        <Alert alert={alert} />
+        <div className="container my-3">
+          {/* <Switch>
+            <Route exact path="/about">
+              <About /> */}
+            {/* </Route> */}
+            {/* <Route ecxact path="/"> */}
+              <TextForm
+                showAlert={showAlert}
+                heading="Enter the Text to analyze"
+                mode={mode}
+              />
+            {/* </Route> */}
+          {/* </Switch> */}
+        </div>
+      {/* </Router> */}
+    </>
   );
 }
 
