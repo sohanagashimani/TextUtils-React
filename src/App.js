@@ -1,14 +1,14 @@
 import "./App.css";
-// import About from "./components/About";
+import About from "./components/About";
 import Navbar from "./components/Navbar";
 import TextForm from "./components/TextForm";
 import Alert from "./components/Alert";
 import React, { useState } from "react";
-// import {
-//   BrowserRouter as Router,
-//   Switch,
-//   Route,
-// } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 
 function App() {
   // eslint-disable-next-line
@@ -36,29 +36,29 @@ function App() {
   };
   return (
     <>
-      {/* <Router> */}
+      <Router>
         <Navbar
           title="TeXtUtils"
-          about="about"
+          about="About"
           mode={mode}
           toggleMode={toggleMode}
         />
         <Alert alert={alert} />
         <div className="container my-3">
-          {/* <Switch>
+          <Switch>
             <Route exact path="/about">
-              <About /> */}
-            {/* </Route> */}
-            {/* <Route ecxact path="/"> */}
+              <About mode = {mode}/>
+            </Route>
+            <Route ecxact path="/">
               <TextForm
                 showAlert={showAlert}
-                heading="Enter the Text to analyze"
+                heading="Try TextUtils - Word Counter, Character Counter, Uppercase, Lowercase"
                 mode={mode}
               />
-            {/* </Route> */}
-          {/* </Switch> */}
+            </Route>
+          </Switch>
         </div>
-      {/* </Router> */}
+      </Router>
     </>
   );
 }
