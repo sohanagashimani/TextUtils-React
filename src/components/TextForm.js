@@ -20,9 +20,7 @@ export default function TextForm(props) {
     props.showAlert("Text Cleared!", "success");
   };
   const handleCopyText = () => {
-    var text = document.getElementById("mybox");
-    text.select();
-    navigator.clipboard.writeText(text.value);
+    navigator.clipboard.writeText(text);
     props.showAlert("Copied to clipboard!", "success");
   };
   const handleExtraSpaces = () => {
@@ -34,35 +32,7 @@ export default function TextForm(props) {
     //   console.log("On change");
     setText(event.target.value);
   };
-  let no = text.split(" ");
-  console.log(no);
-  let withoutspaces = Array.from(text);
-  // console.log(withoutspaces);
-  let i = 0;
-  withoutspaces.forEach((element) => {
-    if (element !== " ") {
-      i = i + 1;
-    }
-  });
-  // console.log(i)
-  let msg;
-  let msg2;
-  // eslint-disable-next-line
-  if (no == "") {
-    msg = <p> 0 Minutes read</p>;
-  } else {
-    msg = <p>{0.008 * text.split(" ").length} Minutes read</p>;
-  }
-  // eslint-disable-next-line
-  if (no == "") {
-    msg2 = <p>0 words and 0 characters</p>;
-  } else {
-    msg2 = (
-      <p>
-        {text.split(" ").length} words and {text.length} characters with space
-      </p>
-    );
-  }
+
   // text = "new text" wrong way to update text
   // setText("new TExt"); Correct way to update text
   return (
@@ -80,7 +50,8 @@ export default function TextForm(props) {
             id="mybox"
             rows="8"
             style={{
-              backgroundColor: props.mode === "dark" ? "rgb(19 70 110)" : "white",
+              backgroundColor:
+                props.mode === "dark" ? "rgb(19 70 110)" : "white",
               color: props.mode === "dark" ? "white" : "black",
             }}
           ></textarea>
@@ -126,10 +97,22 @@ export default function TextForm(props) {
         style={{ color: props.mode === "dark" ? "white" : "black" }}
       >
         <h2>Your text summary</h2>
-        <p>{msg2}</p>
-        {/* <p>{0.008 * text.split(" ").length} Minutes read</p> */}
-        <p>{msg}</p>
-        <p>{i} characters without space</p>
+        <p>
+          {
+            text.split(/\s+/).filter((element) => {
+              return element.length !== 0;
+            }).length}{" "}
+          words and {text.length} characters
+        </p>
+
+        <p>
+          {0.008 *
+            text.split(/\s+/).filter((element) => {
+              return element.length !== 0;
+            }).length}{" "}
+          Minutes read
+        </p>
+
         <h2>Preview</h2>
         <p>
           {text.length > 0 ? text : "Enter something in text box to preview"}
